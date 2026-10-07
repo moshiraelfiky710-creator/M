@@ -1,0 +1,2595 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>د. مشيرة الفقي | Medical Journey</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Tahoma,Arial,sans-serif;
+background:linear-gradient(135deg,#dff7ff,#fff,#d7efff);
+color:#102a43;
+}
+
+button{
+font-family:inherit;
+cursor:pointer;
+border:0;
+}
+
+.screen{
+display:none;
+min-height:100vh;
+padding:15px;
+}
+
+.screen.active{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+}
+
+.card{
+width:min(96%,1000px);
+background:rgba(255,255,255,.97);
+border-radius:30px;
+padding:24px;
+box-shadow:0 10px 35px rgba(0,0,0,.15);
+text-align:center;
+}
+
+h1{
+color:#075985;
+font-size:32px;
+margin:10px;
+}
+
+.sub{
+color:#64748b;
+line-height:1.8;
+font-size:17px;
+}
+
+.btn{
+width:min(95%,460px);
+padding:15px;
+margin:7px;
+border-radius:17px;
+background:#075985;
+color:white;
+font-size:18px;
+font-weight:bold;
+box-shadow:0 5px 0 #043d5d;
+}
+
+.btn:active{
+transform:translateY(4px);
+box-shadow:0 1px 0 #043d5d;
+}
+
+.green{
+background:#15803d;
+box-shadow:0 5px 0 #14532d;
+}
+
+.gold{
+background:#b45309;
+box-shadow:0 5px 0 #78350f;
+}
+
+.dark{
+background:#111827;
+box-shadow:0 5px 0 #000;
+}
+
+.purple{
+background:#7e22ce;
+box-shadow:0 5px 0 #581c87;
+}
+
+.profile{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:10px;
+margin:18px;
+}
+
+.stat{
+background:#f8fafc;
+padding:13px 20px;
+border-radius:18px;
+font-weight:bold;
+box-shadow:0 3px 12px #ddd;
+}
+
+.levelList{
+width:100%;
+max-height:68vh;
+overflow:auto;
+display:grid;
+gap:10px;
+}
+
+.level{
+background:#fff;
+border:2px solid #bae6fd;
+border-radius:20px;
+padding:15px;
+text-align:right;
+}
+
+.level.done{
+background:#dcfce7;
+border-color:#22c55e;
+}
+
+.level.current{
+background:#eff6ff;
+border-color:#0284c7;
+}
+
+.level.locked{
+opacity:.45;
+}
+
+.top{
+width:min(96%,950px);
+display:flex;
+justify-content:space-around;
+align-items:center;
+flex-wrap:wrap;
+gap:8px;
+background:white;
+border-radius:18px;
+padding:12px;
+box-shadow:0 4px 15px #ddd;
+}
+
+.progress{
+width:min(96%,950px);
+height:12px;
+background:#dbeafe;
+border-radius:20px;
+overflow:hidden;
+margin:10px;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:#075985;
+transition:.3s;
+}
+
+.doctorBox{
+width:min(96%,950px);
+background:white;
+border-radius:25px;
+padding:18px;
+margin:10px;
+box-shadow:0 7px 25px rgba(0,0,0,.12);
+}
+
+.doctorFace{
+font-size:70px;
+}
+
+.doctorName{
+font-size:25px;
+font-weight:bold;
+color:#075985;
+}
+
+.specialty{
+color:#64748b;
+margin:5px;
+}
+
+.conversation{
+width:min(96%,950px);
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.me{
+align-self:flex-end;
+background:#075985;
+color:white;
+border-radius:20px 20px 5px 20px;
+padding:14px;
+width:min(85%,700px);
+line-height:1.8;
+}
+
+.doc{
+align-self:flex-start;
+background:white;
+border:2px solid #bae6fd;
+border-radius:20px 20px 20px 5px;
+padding:14px;
+width:min(85%,700px);
+line-height:1.8;
+}
+
+.questionBox{
+width:min(96%,950px);
+background:white;
+border-radius:25px;
+padding:22px;
+box-shadow:0 7px 25px rgba(0,0,0,.12);
+margin-top:10px;
+}
+
+.question{
+font-size:21px;
+font-weight:bold;
+line-height:1.8;
+margin-bottom:18px;
+}
+
+.answers{
+display:grid;
+gap:10px;
+}
+
+.answer{
+padding:15px;
+border-radius:15px;
+background:#e0f2fe;
+border:2px solid #bae6fd;
+font-size:17px;
+font-weight:bold;
+text-align:right;
+}
+
+.answer.correct{
+background:#bbf7d0;
+border-color:#16a34a;
+}
+
+.answer.wrong{
+background:#fecaca;
+border-color:#dc2626;
+}
+
+.feedback{
+min-height:45px;
+padding:10px;
+font-size:18px;
+font-weight:bold;
+}
+
+.shopGrid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+margin:20px 0;
+}
+
+.shopItem{
+background:#f8fafc;
+border:2px solid #cbd5e1;
+border-radius:22px;
+padding:18px;
+}
+
+.shopIcon{
+font-size:50px;
+}
+
+.price{
+color:#b45309;
+font-weight:bold;
+margin:8px;
+}
+
+.big{
+font-size:55px;
+font-weight:bold;
+color:#075985;
+}
+
+.hidden{
+display:none!important;
+}
+
+.small{
+font-size:13px;
+color:#64748b;
+}
+
+@media(max-width:550px){
+h1{font-size:27px}
+.question{font-size:19px}
+.shopGrid{grid-template-columns:1fr 1fr}
+.me,.doc{width:94%}
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= HOME ================= -->
+
+<section id="home" class="screen active">
+
+<div class="card">
+
+<div style="font-size:75px">🩺</div>
+
+<h1>طريق الطبيبة</h1>
+
+<p class="sub">
+رحلة د. مشيرة الفقي في 45 تخصصًا طبيًا
+</p>
+
+<div class="profile">
+
+<div class="stat">
+🏥 المرحلة
+<br>
+<span id="homeLevel">1</span>/45
+</div>
+
+<div class="stat">
+⭐ XP
+<br>
+<span id="homeXP">0</span>
+</div>
+
+<div class="stat">
+🪙 العملات
+<br>
+<span id="homeCoins">0</span>
+</div>
+
+</div>
+
+<button class="btn green" onclick="continueGame()">
+🚀 متابعة الرحلة
+</button>
+
+<button class="btn" onclick="openLevels()">
+🏥 المراحل والتخصصات
+</button>
+
+<button class="btn gold" onclick="openShop()">
+🛍️ متجر الطبيبة
+</button>
+
+<button class="btn purple" onclick="openCollection()">
+🎒 مقتنياتي
+</button>
+
+<button class="btn dark" onclick="newGame()">
+🆕 لعبة جديدة
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= LEVELS ================= -->
+
+<section id="levels" class="screen">
+
+<div class="card">
+
+<h1>🏥 45 تخصصًا طبيًا</h1>
+
+<p class="sub">
+كل مرحلة لها طبيب وتخصص وأسئلة خاصة بالتخصص.
+</p>
+
+<div id="levelList" class="levelList"></div>
+
+<button class="btn dark" onclick="goHome()">
+↩ الرئيسية
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= SHOP ================= -->
+
+<section id="shop" class="screen">
+
+<div class="card">
+
+<h1>🛍️ متجر الطبيبة</h1>
+
+<div class="stat">
+🪙 العملات:
+<span id="shopCoins">0</span>
+</div>
+
+<div class="shopGrid">
+
+<div class="shopItem">
+<div class="shopIcon">🩺</div>
+<b>سماعة طبية</b>
+<div class="price">50 🪙</div>
+<button class="btn" onclick="buyItem('stethoscope',50)">
+شراء
+</button>
+<div id="owned-stethoscope"></div>
+</div>
+
+<div class="shopItem">
+<div class="shopIcon">🥼</div>
+<b>بالطو طبي</b>
+<div class="price">100 🪙</div>
+<button class="btn" onclick="buyItem('coat',100)">
+شراء
+</button>
+<div id="owned-coat"></div>
+</div>
+
+<div class="shopItem">
+<div class="shopIcon">🧤</div>
+<b>قفازات</b>
+<div class="price">75 🪙</div>
+<button class="btn" onclick="buyItem('gloves',75)">
+شراء
+</button>
+<div id="owned-gloves"></div>
+</div>
+
+<div class="shopItem">
+<div class="shopIcon">🩹</div>
+<b>حقيبة إسعافات</b>
+<div class="price">120 🪙</div>
+<button class="btn" onclick="buyItem('firstaid',120)">
+شراء
+</button>
+<div id="owned-firstaid"></div>
+</div>
+
+<div class="shopItem">
+<div class="shopIcon">🔬</div>
+<b>مجهر</b>
+<div class="price">300 🪙</div>
+<button class="btn" onclick="buyItem('microscope',300)">
+شراء
+</button>
+<div id="owned-microscope"></div>
+</div>
+
+<div class="shopItem">
+<div class="shopIcon">⭐</div>
+<b>شارة الطبيبة</b>
+<div class="price">250 🪙</div>
+<button class="btn" onclick="buyItem('badge',250)">
+شراء
+</button>
+<div id="owned-badge"></div>
+</div>
+
+</div>
+
+<button class="btn dark" onclick="goHome()">
+↩ الرئيسية
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= COLLECTION ================= -->
+
+<section id="collection" class="screen">
+
+<div class="card">
+
+<h1>🎒 مقتنياتي</h1>
+
+<div id="collectionList"></div>
+
+<button class="btn dark" onclick="goHome()">
+↩ الرئيسية
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= GAME ================= -->
+
+<section id="game" class="screen">
+
+<div class="top">
+
+<div>
+🏥 <span id="levelNumber">1</span>/45
+</div>
+
+<div>
+⭐ <span id="score">0</span>
+</div>
+
+<div>
+🪙 <span id="coins">0</span>
+</div>
+
+<div id="hearts">
+❤️❤️❤️
+</div>
+
+</div>
+
+<div class="progress">
+<div id="bar" class="bar"></div>
+</div>
+
+<div class="doctorBox">
+
+<div id="doctorFace" class="doctorFace">
+👨‍⚕️
+</div>
+
+<div id="doctorName" class="doctorName">
+د. عبد الرحمن
+</div>
+
+<div id="doctorSpecialty" class="specialty">
+جراحة عامة
+</div>
+
+</div>
+
+<div id="conversation" class="conversation"></div>
+
+<div class="questionBox">
+
+<div id="question" class="question"></div>
+
+<div id="answers" class="answers"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<button
+id="nextButton"
+class="btn hidden"
+onclick="nextQuestion()">
+السؤال التالي ➡️
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= RESULT ================= -->
+
+<section id="result" class="screen">
+
+<div class="card">
+
+<div id="resultIcon" style="font-size:75px">
+🏆
+</div>
+
+<h1 id="resultTitle">
+أحسنتِ يا د. مشيرة!
+</h1>
+
+<p id="resultText"></p>
+
+<div class="big">
+<span id="finalScore">0</span>
+</div>
+
+<p>⭐ نقاط المرحلة</p>
+
+<p>
+✨ XP:
+<b id="earnedXP">0</b>
+</p>
+
+<p>
+🪙 العملات:
+<b id="earnedCoins">0</b>
+</p>
+
+<button
+id="nextLevelButton"
+class="btn green"
+onclick="nextLevel()">
+🚀 المرحلة التالية
+</button>
+
+<button class="btn gold" onclick="openShop()">
+🛍️ المتجر
+</button>
+
+<button class="btn dark" onclick="goHome()">
+🏠 الرئيسية
+</button>
+
+</div>
+
+</section>
+
+
+<script>
+
+/* =========================================================
+   45 تخصصًا
+========================================================= */
+
+const doctors=[
+
+["د. عبد الرحمن","جراحة عامة","👨‍⚕️"],
+["د. سلمى","علاج طبيعي","👩‍⚕️"],
+["د. ملك","طب أسنان","👩‍⚕️"],
+["د. لمياء","طب الأطفال","👩‍⚕️"],
+["د. إيمان","نساء وتوليد","👩‍⚕️"],
+["د. فاطمة","الأمراض الجلدية","👩‍⚕️"],
+["د. أحمد","القلب والأوعية الدموية","👨‍⚕️"],
+["د. نور","المخ والأعصاب","👩‍⚕️"],
+["د. ياسين","الباطنة","👨‍⚕️"],
+["د. مريم","طب العيون","👩‍⚕️"],
+["د. عمر","أنف وأذن وحنجرة","👨‍⚕️"],
+["د. ليان","الأمراض الصدرية","👩‍⚕️"],
+["د. كريم","الكلى والمسالك البولية","👨‍⚕️"],
+["د. سارة","الجهاز الهضمي","👩‍⚕️"],
+["د. يوسف","العظام والمفاصل","👨‍⚕️"],
+["د. جنى","الروماتيزم والمناعة","👩‍⚕️"],
+["د. زياد","الأورام","👨‍⚕️"],
+["د. رنا","الغدد الصماء والسكري","👩‍⚕️"],
+["د. مازن","طب الطوارئ","👨‍⚕️"],
+["د. هاجر","طب الأسرة","👩‍⚕️"],
+["د. محمد","التخدير","👨‍⚕️"],
+["د. هنا","العناية المركزة","👩‍⚕️"],
+["د. خالد","الأشعة التشخيصية","👨‍⚕️"],
+["د. نورهان","الطب النووي","👩‍⚕️"],
+["د. شريف","علم الأمراض","👨‍⚕️"],
+["د. آية","الأحياء الدقيقة الطبية","👩‍⚕️"],
+["د. حازم","أمراض الدم","👨‍⚕️"],
+["د. بسمة","الطب النفسي","👩‍⚕️"],
+["د. تامر","حديثو الولادة","👨‍⚕️"],
+["د. روان","الوراثة الطبية","👩‍⚕️"],
+["د. حسام","جراحة القلب والصدر","👨‍⚕️"],
+["د. ريهام","جراحة المخ والأعصاب","👩‍⚕️"],
+["د. سامح","جراحة العظام","👨‍⚕️"],
+["د. مروة","جراحة الأوعية الدموية","👩‍⚕️"],
+["د. طارق","جراحة المسالك البولية","👨‍⚕️"],
+["د. نادين","التغذية العلاجية","👩‍⚕️"],
+["د. محمود","الطب الرياضي","👨‍⚕️"],
+["د. ملكية","الطب الشرعي","👩‍⚕️"],
+["د. سيف","الطب الوقائي","👨‍⚕️"],
+["د. جهاد","الصحة العامة","👩‍⚕️"],
+["د. إياد","علم السموم","👨‍⚕️"],
+["د. منة","الصيدلة السريرية","👩‍⚕️"],
+["د. أدهم","العلاج الوظيفي","👨‍⚕️"],
+["د. حور","النطق والتخاطب","👩‍⚕️"],
+["د. فهد","الطب التأهيلي","👨‍⚕️"]
+
+];
+
+
+/* =========================================================
+   بنك الأسئلة التخصصية
+   كل تخصص له موضوعات مختلفة
+========================================================= */
+
+const specialtyTopics={
+
+"جراحة عامة":[
+"تشريح جدار البطن",
+"الصفاق",
+"الزائدة الدودية",
+"الفتق الأربي",
+"المرارة",
+"البنكرياس",
+"الأمعاء الدقيقة",
+"القولون",
+"الجروح",
+"النزيف",
+"العدوى الجراحية",
+"الصدمة",
+"الانسداد المعوي",
+"التئام الجروح",
+"المضاعفات بعد الجراحة"
+],
+
+"علاج طبيعي":[
+"مدى حركة المفاصل",
+"العضلات الهيكلية",
+"القوة العضلية",
+"التحكم الحركي",
+"المشي",
+"التوازن",
+"التمدد العضلي",
+"التمارين العلاجية",
+"إصابات الأربطة",
+"إعادة التأهيل",
+"الألم العضلي",
+"الأعصاب الطرفية",
+"العمود الفقري",
+"إعادة التأهيل بعد الجلطات",
+"الوظيفة الحركية"
+],
+
+"طب أسنان":[
+"تشريح السن",
+"المينا",
+"العاج",
+"لب السن",
+"الأسنان اللبنية",
+"الأعصاب القحفية",
+"اللثة",
+"التسوس",
+"التهاب اللب",
+"الخراج السني",
+"الإطباق",
+"الأشعة السنية",
+"قنوات الجذر",
+"الضرس الثالث",
+"صحة الفم"
+],
+
+"طب الأطفال":[
+"النمو الطبيعي",
+"منعكسات حديثي الولادة",
+"التغذية عند الرضع",
+"الجفاف",
+"الحمى",
+"الجهاز التنفسي عند الأطفال",
+"التطعيمات",
+"فقر الدم",
+"النمو العصبي",
+"الربو عند الأطفال",
+"التهاب الأذن",
+"الإسهال",
+"الالتهاب الرئوي",
+"النوبات الحرارية",
+"تقييم الطفل"
+],
+
+"نساء وتوليد":[
+"تشريح الحوض الأنثوي",
+"المبيض",
+"الرحم",
+"قناة فالوب",
+"الدورة الشهرية",
+"الإباضة",
+"الإخصاب",
+"المشيمة",
+"الحمل",
+"الثلث الأول",
+"الثلث الثالث",
+"الولادة",
+"نزيف ما بعد الولادة",
+"تسمم الحمل",
+"رعاية الأم"
+],
+
+"الأمراض الجلدية":[
+"طبقات الجلد",
+"البشرة",
+"الأدمة",
+"الغدد الدهنية",
+"الغدد العرقية",
+"بصيلات الشعر",
+"الأكزيما",
+"الصدفية",
+"حب الشباب",
+"الفطريات الجلدية",
+"التهاب الجلد",
+"الشامات",
+"التصبغات",
+"الشرى",
+"حاجز الجلد"
+],
+
+"القلب والأوعية الدموية":[
+"تشريح القلب",
+"الأذينان",
+"البطينان",
+"الصمامات",
+"الشرايين التاجية",
+"الجهاز الكهربائي للقلب",
+"العقدة الجيبية",
+"النتاج القلبي",
+"ضغط الدم",
+"تخطيط القلب",
+"الذبحة الصدرية",
+"قصور القلب",
+"اضطرابات النظم",
+"صمامات القلب",
+"الدورة الدموية"
+],
+
+"المخ والأعصاب":[
+"الفص الجبهي",
+"الفص الجداري",
+"الفص الصدغي",
+"الفص القذالي",
+"المخيخ",
+"جذع الدماغ",
+"الحبل الشوكي",
+"الأعصاب القحفية",
+"العصب الوجهي",
+"العصب البصري",
+"المنعكسات",
+"السكتة الدماغية",
+"النوبات",
+"السحايا",
+"السائل الدماغي الشوكي"
+],
+
+"الباطنة":[
+"الفحص السريري",
+"العلامات الحيوية",
+"فقر الدم",
+"الالتهاب",
+"السوائل والشوارد",
+"وظائف الكبد",
+"وظائف الكلى",
+"السكر",
+"ضغط الدم",
+"التشخيص التفريقي",
+"التاريخ المرضي",
+"الفحص العام",
+"التحاليل",
+"الأعراض الجهازية",
+"التقييم السريري"
+],
+
+"طب العيون":[
+"تشريح العين",
+"القرنية",
+"العدسة",
+"الشبكية",
+"العصب البصري",
+"الجسم الزجاجي",
+"الجسم الهدبي",
+"القزحية",
+"ضغط العين",
+"حدة الإبصار",
+"المياه البيضاء",
+"المياه الزرقاء",
+"انفصال الشبكية",
+"التهاب الملتحمة",
+"مجال الرؤية"
+],
+
+"أنف وأذن وحنجرة":[
+"الأذن الخارجية",
+"طبلة الأذن",
+"الأذن الوسطى",
+"القوقعة",
+"الجهاز الدهليزي",
+"العصب السمعي",
+"الجيوب الأنفية",
+"التجويف الأنفي",
+"البلعوم",
+"الحنجرة",
+"الأحبال الصوتية",
+"اللوزتان",
+"التهاب الأذن",
+"الدوار",
+"السمع"
+],
+
+"الأمراض الصدرية":[
+"تشريح الرئة",
+"الشجرة القصبية",
+"الحويصلات الهوائية",
+"الغشاء البلوري",
+"الحجاب الحاجز",
+"تبادل الغازات",
+"حجم الرئة",
+"الربو",
+"الانسداد الرئوي",
+"الالتهاب الرئوي",
+"السل",
+"الانصباب البلوري",
+"غازات الدم",
+"الأكسجة",
+"وظائف التنفس"
+],
+
+"الكلى والمسالك البولية":[
+"تشريح الكلية",
+"النفرون",
+"الكبيبة",
+"الأنابيب الكلوية",
+"الحالب",
+"المثانة",
+"الإحليل",
+"ترشيح الدم",
+"تكوين البول",
+"الصوديوم",
+"البوتاسيوم",
+"حصوات الكلى",
+"التهاب المسالك",
+"الفشل الكلوي",
+"توازن السوائل"
+],
+
+"الجهاز الهضمي":[
+"المريء",
+"المعدة",
+"الاثنا عشر",
+"الأمعاء الدقيقة",
+"القولون",
+"الكبد",
+"المرارة",
+"البنكرياس",
+"الامتصاص",
+"الإنزيمات الهضمية",
+"القرحة",
+"الارتجاع",
+"التهاب الكبد",
+"الانسداد",
+"النزيف الهضمي"
+],
+
+"العظام والمفاصل":[
+"تشريح العظم",
+"نخاع العظم",
+"المفصل الزلالي",
+"الغضروف",
+"الأربطة",
+"الأوتار",
+"العمود الفقري",
+"الكتف",
+"الركبة",
+"الورك",
+"الكسور",
+"الخلع",
+"التهاب المفاصل",
+"هشاشة العظام",
+"التئام الكسور"
+],
+
+"الروماتيزم والمناعة":[
+"الجهاز المناعي",
+"الأجسام المضادة",
+"الخلايا اللمفاوية",
+"المناعة الذاتية",
+"الروماتويد",
+"الذئبة",
+"الالتهاب",
+"المفاصل",
+"الأوعية الدموية",
+"الأجسام المضادة الذاتية",
+"المناعة الفطرية",
+"المناعة المكتسبة",
+"الحمى",
+"التهاب المفاصل",
+"الأمراض المناعية"
+],
+
+"الأورام":[
+"نمو الخلايا",
+"الطفرات",
+"السرطان",
+"الورم الحميد",
+"الورم الخبيث",
+"الانتشار",
+"الغزو الموضعي",
+"العقد اللمفاوية",
+"الخزعة",
+"التصوير",
+"العلاج الكيميائي",
+"العلاج الإشعاعي",
+"المناعة ضد الأورام",
+"مراحل السرطان",
+"المتابعة"
+],
+
+"الغدد الصماء والسكري":[
+"الغدة النخامية",
+"الغدة الدرقية",
+"الغدة الكظرية",
+"البنكرياس",
+"الإنسولين",
+"الجلوكاجون",
+"سكر الدم",
+"السكري النوع الأول",
+"السكري النوع الثاني",
+"الغدة الجار درقية",
+"الكالسيوم",
+"هرمون النمو",
+"الكورتيزول",
+"هرمونات الغدة الدرقية",
+"الاستقلاب"
+],
+
+"طب الطوارئ":[
+"تقييم المصاب",
+"مجرى الهواء",
+"التنفس",
+"الدورة الدموية",
+"الصدمة",
+"النزيف",
+"الإنعاش",
+"الإصابات",
+"الحروق",
+"التسمم",
+"فقد الوعي",
+"ألم الصدر",
+"ضيق التنفس",
+"السكتة الدماغية",
+"الفرز الطبي"
+],
+
+"طب الأسرة":[
+"التاريخ المرضي",
+"الفحص الدوري",
+"الوقاية",
+"التطعيم",
+"ضغط الدم",
+"السكري",
+"السمنة",
+"عوامل الخطورة",
+"الفحوصات الوقائية",
+"صحة الأسرة",
+"الأمراض المزمنة",
+"التثقيف الصحي",
+"نمط الحياة",
+"الصحة النفسية",
+"الرعاية المستمرة"
+],
+
+"التخدير":[
+"الجهاز العصبي",
+"الألم",
+"التخدير العام",
+"التخدير الموضعي",
+"المسكنات",
+"مجرى الهواء",
+"التهوية",
+"الأكسجين",
+"ضغط الدم",
+"النبض",
+"المراقبة",
+"الاستفاقة",
+"المضاعفات",
+"تقييم ما قبل التخدير",
+"سلامة المريض"
+],
+
+"العناية المركزة":[
+"المراقبة الحيوية",
+"التهوية الميكانيكية",
+"الأكسجة",
+"الصدمة",
+"الإنتان",
+"ضغط الدم",
+"السوائل",
+"الشوارد",
+"الفشل التنفسي",
+"الفشل الكلوي",
+"الوعي",
+"التغذية",
+"العدوى",
+"المضاعفات",
+"الرعاية الحرجة"
+],
+
+"الأشعة التشخيصية":[
+"الأشعة السينية",
+"الموجات فوق الصوتية",
+"الأشعة المقطعية",
+"الرنين المغناطيسي",
+"المادة الظليلة",
+"تشريح الصدر",
+"تشريح البطن",
+"تصوير العظام",
+"تصوير الدماغ",
+"تصوير الأوعية",
+"الإشعاع",
+"سلامة المريض",
+"اختيار الفحص",
+"قراءة الصور",
+"التشخيص بالتصوير"
+],
+
+"الطب النووي":[
+"النظائر المشعة",
+"المواد المشعة",
+"التصوير الوظيفي",
+"الغدة الدرقية",
+"العظام",
+"PET",
+"SPECT",
+"التقاط النظائر",
+"الاستقلاب",
+"الأورام",
+"السلامة الإشعاعية",
+"الجرعة",
+"التصوير الوظيفي",
+"الكشف المبكر",
+"الطب النووي"
+],
+
+"علم الأمراض":[
+"الخلايا",
+"الأنسجة",
+"الالتهاب",
+"النخر",
+"التنكس",
+"الخزعة",
+"الفحص المجهري",
+"الأورام",
+"الخلايا الخبيثة",
+"المناعة النسيجية",
+"الدم",
+"الأنسجة الطبيعية",
+"التغيرات المرضية",
+"التشخيص النسيجي",
+"علم الأمراض"
+],
+
+"الأحياء الدقيقة الطبية":[
+"البكتيريا",
+"الفيروسات",
+"الفطريات",
+"الطفيليات",
+"الجدار الخلوي",
+"المناعة",
+"العدوى",
+"المزرعة",
+"المضادات الحيوية",
+"مقاومة المضادات",
+"التعقيم",
+"العدوى المكتسبة بالمستشفى",
+"السموم البكتيرية",
+"طرق الانتقال",
+"الوقاية من العدوى"
+],
+
+"أمراض الدم":[
+"كريات الدم الحمراء",
+"الهيموغلوبين",
+"كريات الدم البيضاء",
+"الصفائح",
+"نخاع العظم",
+"فقر الدم",
+"التخثر",
+"عوامل التخثر",
+"اللوكيميا",
+"اللمفوما",
+"النزيف",
+"الجلطات",
+"فصائل الدم",
+"نقل الدم",
+"اضطرابات الدم"
+],
+
+"الطب النفسي":[
+"الدماغ",
+"المزاج",
+"القلق",
+"الاكتئاب",
+"الذاكرة",
+"الانتباه",
+"النوم",
+"الإدراك",
+"الذهان",
+"الاضطرابات النفسية",
+"التقييم النفسي",
+"العلاج النفسي",
+"الأدوية النفسية",
+"السلوك",
+"الصحة النفسية"
+],
+
+"حديثو الولادة":[
+"تشريح حديث الولادة",
+"التنفس بعد الولادة",
+"الدورة الدموية",
+"الرضاعة",
+"الحرارة",
+"اليرقان",
+"الوزن",
+"النمو",
+"الخداج",
+"الحضانة",
+"العدوى",
+"السكر",
+"الاختناق الوليدي",
+"المنعكسات",
+"رعاية حديث الولادة"
+],
+
+"الوراثة الطبية":[
+"DNA",
+"الجينات",
+"الكروموسومات",
+"الطفرات",
+"الوراثة السائدة",
+"الوراثة المتنحية",
+"الكروموسوم X",
+"الطفرات الجينية",
+"الأمراض الوراثية",
+"الاستشارة الوراثية",
+"الفحص الجيني",
+"الكروموسومات الجنسية",
+"التعبير الجيني",
+"الطفرة",
+"التاريخ العائلي"
+],
+
+"جراحة القلب والصدر":[
+"تشريح القلب",
+"الشرايين التاجية",
+"الصمامات",
+"القص",
+"القفص الصدري",
+"الرئة",
+"الدورة الدموية",
+"جراحة القلب المفتوح",
+"المجازة التاجية",
+"جراحة الصمامات",
+"التخدير",
+"المضاعفات",
+"العناية بعد الجراحة",
+"نزيف الصدر",
+"التئام الجرح"
+],
+
+"جراحة المخ والأعصاب":[
+"تشريح المخ",
+"الفص الجبهي",
+"الفص الصدغي",
+"المخيخ",
+"جذع الدماغ",
+"الحبل الشوكي",
+"السحايا",
+"السائل الدماغي",
+"الأورام الدماغية",
+"إصابات الرأس",
+"النزيف داخل الجمجمة",
+"ضغط الجمجمة",
+"الأعصاب القحفية",
+"العمليات العصبية",
+"التأهيل العصبي"
+],
+
+"جراحة العظام":[
+"العظم",
+"المفاصل",
+"الغضاريف",
+"الأربطة",
+"الأوتار",
+"الكسور",
+"الخلع",
+"تثبيت الكسور",
+"مفصل الركبة",
+"مفصل الورك",
+"العمود الفقري",
+"إصابات الملاعب",
+"التئام العظام",
+"الجبائر",
+"المضاعفات الجراحية"
+],
+
+"جراحة الأوعية الدموية":[
+"الشرايين",
+"الأوردة",
+"الشعيرات",
+"الشريان الأورطي",
+"الشرايين الطرفية",
+"الدوالي",
+"الجلطات",
+"تمدد الأوعية",
+"نقص التروية",
+"الدورة الدموية",
+"القسطرة",
+"الدعامات",
+"جراحة الأوعية",
+"النزيف",
+"التروية"
+],
+
+"جراحة المسالك البولية":[
+"الكلى",
+"الحالب",
+"المثانة",
+"الإحليل",
+"البروستاتا",
+"الخصية",
+"حصوات الكلى",
+"انسداد المسالك",
+"التهاب المسالك",
+"البروستاتا",
+"السوائل",
+"التبول",
+"الجراحة",
+"القسطرة",
+"المضاعفات"
+],
+
+"التغذية العلاجية":[
+"الكربوهيدرات",
+"البروتين",
+"الدهون",
+"الفيتامينات",
+"المعادن",
+"الحديد",
+"الكالسيوم",
+"فيتامين د",
+"الجفاف",
+"الاحتياجات الغذائية",
+"السكري",
+"السمنة",
+"سوء التغذية",
+"التغذية في المستشفى",
+"تقييم التغذية"
+],
+
+"الطب الرياضي":[
+"العضلات",
+"الأوتار",
+"الأربطة",
+"المفاصل",
+"الإصابات الرياضية",
+"التمزق العضلي",
+"الالتواء",
+"الكسور",
+"الإحماء",
+"التأهيل",
+"العودة للرياضة",
+"الوقاية",
+"الأداء البدني",
+"التوازن",
+"المرونة"
+],
+
+"الطب الشرعي":[
+"التشريح",
+"الإصابات",
+"الكدمات",
+"الجروح",
+"الكسور",
+"الوفاة",
+"الطب الشرعي",
+"تحديد الهوية",
+"الأدلة الطبية",
+"الفحص",
+"السموم",
+"التوثيق",
+"الزمن بعد الوفاة",
+"الإصابات الرضية",
+"التقرير الطبي"
+],
+
+"الطب الوقائي":[
+"التطعيم",
+"الوقاية",
+"عوامل الخطورة",
+"الأمراض المعدية",
+"الفحص المبكر",
+"التثقيف الصحي",
+"النظافة",
+"الصحة العامة",
+"العدوى",
+"نمط الحياة",
+"التغذية",
+"النشاط البدني",
+"الوقاية الأولية",
+"الوقاية الثانوية",
+"الوقاية من الأمراض"
+],
+
+"الصحة العامة":[
+"الصحة السكانية",
+"الوبائيات",
+"معدل الانتشار",
+"معدل الحدوث",
+"عوامل الخطورة",
+"الصحة البيئية",
+"التطعيم",
+"الأمراض المعدية",
+"التثقيف الصحي",
+"المسح الصحي",
+"الوقاية",
+"مراقبة الأمراض",
+"الصحة المجتمعية",
+"الإحصاء الصحي",
+"السياسات الصحية"
+],
+
+"علم السموم":[
+"السموم",
+"الجرعات",
+"الامتصاص",
+"التوزيع",
+"الاستقلاب",
+"الإطراح",
+"التسمم الدوائي",
+"التسمم الكيميائي",
+"الأعراض العصبية",
+"الأعراض التنفسية",
+"الفحم النشط",
+"الترياق",
+"المراقبة",
+"التسمم الحاد",
+"التسمم المزمن"
+],
+
+"الصيدلة السريرية":[
+"الدواء",
+"الجرعة",
+"الامتصاص",
+"التوزيع",
+"الاستقلاب",
+"الإطراح",
+"التداخلات الدوائية",
+"الآثار الجانبية",
+"مقاومة المضادات",
+"الجرعات",
+"سلامة الدواء",
+"اختيار العلاج",
+"وظائف الكبد",
+"وظائف الكلى",
+"المتابعة الدوائية"
+],
+
+"العلاج الوظيفي":[
+"الوظائف اليومية",
+"اليد",
+"التنسيق الحركي",
+"الإدراك",
+"الاستقلالية",
+"إعادة التأهيل",
+"إصابات الأعصاب",
+"الجلطات",
+"الطفل",
+"التوازن",
+"التحكم الحركي",
+"الأدوات المساعدة",
+"الأنشطة اليومية",
+"التأهيل",
+"الوظيفة"
+],
+
+"النطق والتخاطب":[
+"تشريح جهاز الكلام",
+"الحنجرة",
+"الأحبال الصوتية",
+"التنفس والكلام",
+"النطق",
+"اللغة",
+"الفهم",
+"التعبير",
+"التأتأة",
+"اضطرابات النطق",
+"البلع",
+"الأعصاب القحفية",
+"التأهيل",
+"تطور اللغة",
+"التواصل"
+],
+
+"الطب التأهيلي":[
+"التأهيل",
+"الحركة",
+"القوة العضلية",
+"الأعصاب",
+"المفاصل",
+"الألم",
+"الإصابات",
+"الجلطات",
+"إصابات الحبل الشوكي",
+"الأجهزة المساعدة",
+"المشي",
+"التوازن",
+"الاستقلالية",
+"إعادة الوظيفة",
+"الرعاية التأهيلية"
+
+]
+};
+
+
+/* =========================================================
+   تحويل الموضوع إلى سؤال طبي
+========================================================= */
+
+const questionTemplates=[
+
+{
+easy:
+"ما البنية أو المفهوم الأساسي المرتبط بـ{topic}؟",
+hard:
+"أي عبارة تشريحية أو فسيولوجية تصف {topic} بصورة أدق؟"
+},
+
+{
+easy:
+"أي مما يلي يرتبط مباشرةً بـ{topic}؟",
+hard:
+"أي اختيار يمثل العلاقة الطبية الأدق مع {topic}؟"
+},
+
+{
+easy:
+"في دراسة {topic}، ما النقطة الأساسية التي يجب معرفتها؟",
+hard:
+"أي معلومة تُعد الأكثر أهمية عند تقييم {topic} سريريًا؟"
+},
+
+{
+easy:
+"ما الوظيفة الأساسية المرتبطة بـ{topic}؟",
+hard:
+"ما التفسير الفسيولوجي الأدق للوظيفة المرتبطة بـ{topic}؟"
+},
+
+{
+easy:
+"أي جزء من الجسم يرتبط بـ{topic}؟",
+hard:
+"أي بنية تشريحية ترتبط بصورة مباشرة بـ{topic}؟"
+},
+
+{
+easy:
+"ما المصطلح الطبي الأقرب إلى {topic}؟",
+hard:
+"أي وصف طبي يميز {topic} عن الحالات المشابهة؟"
+},
+
+{
+easy:
+"ما العامل المهم في {topic}؟",
+hard:
+"أي عامل يؤثر بصورة مباشرة في {topic} من الناحية السريرية؟"
+},
+
+{
+easy:
+"ما الذي يمكن للطبيب تقييمه عند دراسة {topic}؟",
+hard:
+"أي نتيجة سريرية يمكن أن تساعد في تقييم {topic}؟"
+},
+
+{
+easy:
+"أي جهاز يرتبط بـ{topic}؟",
+hard:
+"كيف يرتبط {topic} بالوظيفة الطبيعية للجهاز المعني؟"
+},
+
+{
+easy:
+"ما الخطوة الأساسية لفهم {topic}؟",
+hard:
+"ما الخطوة الأكثر منطقية في التقييم الطبي لـ{topic}؟"
+},
+
+{
+easy:
+"أي اختيار صحيح بخصوص {topic}؟",
+hard:
+"أي اختيار يعبّر بدقة أكبر عن {topic} من منظور طبي؟"
+},
+
+{
+easy:
+"ما العلاقة بين {topic} ووظيفة الجسم؟",
+hard:
+"أي آلية فسيولوجية تفسر العلاقة بين {topic} ووظيفة الجسم؟"
+},
+
+{
+easy:
+"أي تشريح يرتبط بـ{topic}؟",
+hard:
+"أي تركيب تشريحي له علاقة مباشرة بـ{topic}؟"
+},
+
+{
+easy:
+"ما أهم شيء يجب معرفته عن {topic}؟",
+hard:
+"ما المعلومة التي تفرق بين الفهم الأساسي والمتقدم لـ{topic}؟"
+},
+
+{
+easy:
+"كيف يمكن للطبيب التفكير في {topic}؟",
+hard:
+"أي استنتاج سريري هو الأكثر دقة عند تحليل {topic}؟"
+}
+
+];
+
+
+/* =========================================================
+   توليد الخيارات الطبية
+========================================================= */
+
+const distractorPool=[
+
+"النسيج العضلي",
+"الجهاز العصبي",
+"الجهاز الدوري",
+"الجهاز التنفسي",
+"الجهاز الهضمي",
+"الجهاز البولي",
+"الجهاز المناعي",
+"العظم",
+"العضلة",
+"العصب",
+"الشريان",
+"الوريد",
+"الغدة",
+"النسيج الضام",
+"الظهارة",
+"الدم",
+"اللمف",
+"المخ",
+"القلب",
+"الرئة",
+"الكبد",
+"الكلى",
+"المعدة",
+"الأمعاء",
+"الجلد",
+"العين",
+"الأذن",
+"الهرمون",
+"الإنزيم",
+"الخلية",
+"الحمض النووي",
+"المناعة",
+"الالتهاب",
+"الأكسجين",
+"ثاني أكسيد الكربون"
+];
+
+
+/*
+هذه الدالة تجعل الإجابة الصحيحة تتغير
+بين الاختيارات.
+*/
+
+function shuffleOptions(correct){
+
+let pool=distractorPool
+.filter(x=>x!==correct);
+
+let selected=[];
+
+while(selected.length<3){
+
+let item=
+pool[Math.floor(Math.random()*pool.length)];
+
+if(!selected.includes(item)){
+selected.push(item);
+}
+
+}
+
+selected.push(correct);
+
+selected.sort(()=>Math.random()-.5);
+
+return selected;
+
+}
+
+
+/* =========================================================
+   إنشاء 15 سؤالًا لكل تخصص
+========================================================= */
+
+function buildQuestions(specialty){
+
+let topics=
+specialtyTopics[specialty];
+
+let questions=[];
+
+for(let i=0;i<15;i++){
+
+let topic=topics[i];
+
+let correct=topic;
+
+/*
+نضيف سؤالًا تخصصيًا بصياغة طبية.
+*/
+
+let template=
+questionTemplates[i];
+
+let difficulty=
+i<5
+?"مستوى تمهيدي"
+:i<10
+?"مستوى متوسط"
+:"مستوى متقدم";
+
+let questionText=
+(i<5?template.easy:template.hard)
+.replaceAll("{topic}",topic);
+
+/*
+في بعض الأسئلة يكون الموضوع نفسه هو الإجابة،
+وفي بعضها تكون الإجابة الطبية الصحيحة هي الموضوع.
+*/
+
+let options=
+shuffleOptions(correct);
+
+questions.push({
+
+text:
+"["+difficulty+"] "+questionText,
+
+options:options,
+
+correct:
+options.indexOf(correct)
+
+});
+
+}
+
+return questions;
+
+}
+
+
+/* =========================================================
+   إنشاء المراحل
+========================================================= */
+
+const levels=
+doctors.map((doctor,index)=>({
+
+number:index+1,
+
+doctor:doctor[0],
+
+specialty:doctor[1],
+
+face:doctor[2],
+
+questions:
+buildQuestions(doctor[1])
+
+}));
+
+
+/* =========================================================
+   الحفظ
+========================================================= */
+
+let currentLevel=
+Number(localStorage.getItem("moshiraLevel")||0);
+
+let xp=
+Number(localStorage.getItem("moshiraXP")||0);
+
+let coins=
+Number(localStorage.getItem("moshiraCoins")||0);
+
+let currentQuestion=0;
+
+let score=0;
+
+let hearts=3;
+
+let answered=false;
+
+
+/* =========================================================
+   الشاشة
+========================================================= */
+
+function showScreen(id){
+
+document
+.querySelectorAll(".screen")
+.forEach(s=>s.classList.remove("active"));
+
+document
+.getElementById(id)
+.classList.add("active");
+
+updateHome();
+
+}
+
+
+/* =========================================================
+   الرئيسية
+========================================================= */
+
+function goHome(){
+
+showScreen("home");
+
+}
+
+
+function updateHome(){
+
+document.getElementById("homeLevel")
+.innerText=
+Math.min(currentLevel+1,45);
+
+document.getElementById("homeXP")
+.innerText=xp;
+
+document.getElementById("homeCoins")
+.innerText=coins;
+
+}
+
+
+/* =========================================================
+   المراحل
+========================================================= */
+
+function openLevels(){
+
+let list=
+document.getElementById("levelList");
+
+list.innerHTML="";
+
+levels.forEach((level,index)=>{
+
+let div=
+document.createElement("div");
+
+div.className="level";
+
+if(index<currentLevel)
+div.classList.add("done");
+
+if(index===currentLevel)
+div.classList.add("current");
+
+if(index>currentLevel)
+div.classList.add("locked");
+
+let status=
+index<currentLevel
+?"✅ مكتملة"
+:index===currentLevel
+?"🔓 متاحة"
+:"🔒 مغلقة";
+
+div.innerHTML=`
+
+<b>المرحلة ${level.number}</b>
+
+<br><br>
+
+🏥 ${level.specialty}
+
+<br>
+
+👨‍⚕️ ${level.doctor}
+
+<br><br>
+
+<span class="small">
+${status}
+ — 15 سؤالًا تخصصيًا
+</span>
+
+`;
+
+if(index<=currentLevel){
+
+div.onclick=()=>{
+
+currentLevel=index;
+
+saveData();
+
+startLevel();
+
+};
+
+}
+
+list.appendChild(div);
+
+});
+
+showScreen("levels");
+
+}
+
+
+/* =========================================================
+   متابعة
+========================================================= */
+
+function continueGame(){
+
+startLevel();
+
+}
+
+
+/* =========================================================
+   بدء المرحلة
+========================================================= */
+
+function startLevel(){
+
+currentQuestion=0;
+
+score=0;
+
+hearts=3;
+
+answered=false;
+
+let level=
+levels[currentLevel];
+
+document.getElementById("levelNumber")
+.innerText=level.number;
+
+document.getElementById("doctorFace")
+.innerText=level.face;
+
+document.getElementById("doctorName")
+.innerText=level.doctor;
+
+document.getElementById("doctorSpecialty")
+.innerText=level.specialty;
+
+document.getElementById("conversation")
+.innerHTML=`
+
+<div class="doc">
+
+<b>${level.face} ${level.doctor}:</b>
+
+<br>
+
+أهلًا بكِ يا د. مشيرة.
+أنا ${level.doctor}، وتخصصي هو
+<b>${level.specialty}</b>.
+
+</div>
+
+<div class="me">
+
+<b>👩‍⚕️ د. مشيرة:</b>
+
+<br>
+
+أهلًا يا دكتور.
+أنا جاهزة، وعايزة أتعلم تخصصك خطوة بخطوة.
+
+</div>
+
+<div class="doc">
+
+<b>${level.face} ${level.doctor}:</b>
+
+<br>
+
+ممتاز.
+عندي لكِ 15 سؤالًا في
+<b>${level.specialty}</b>،
+وسنبدأ بالأساسيات ثم نصعد تدريجيًا إلى أسئلة أصعب.
+
+</div>
+
+`;
+
+showScreen("game");
+
+updateStats();
+
+showQuestion();
+
+}
+
+
+/* =========================================================
+   السؤال
+========================================================= */
+
+function showQuestion(){
+
+let level=
+levels[currentLevel];
+
+let q=
+level.questions[currentQuestion];
+
+answered=false;
+
+document.getElementById("question")
+.innerText=
+"👩‍⚕️ د. مشيرة: "+q.text;
+
+let answers=
+document.getElementById("answers");
+
+answers.innerHTML="";
+
+document.getElementById("feedback")
+.innerText="";
+
+document.getElementById("nextButton")
+.classList.add("hidden");
+
+q.options.forEach((answer,index)=>{
+
+let button=
+document.createElement("button");
+
+button.className="answer";
+
+button.innerText=
+answer;
+
+button.onclick=()=>{
+checkAnswer(index,button);
+};
+
+answers.appendChild(button);
+
+});
+
+let percent=
+(currentQuestion/15)*100;
+
+document.getElementById("bar")
+.style.width=
+percent+"%";
+
+}
+
+
+/* =========================================================
+   الإجابة
+========================================================= */
+
+function checkAnswer(index,button){
+
+if(answered)return;
+
+answered=true;
+
+let q=
+levels[currentLevel]
+.questions[currentQuestion];
+
+let buttons=
+document.querySelectorAll(".answer");
+
+buttons.forEach(b=>{
+b.disabled=true;
+});
+
+if(index===q.correct){
+
+button.classList.add("correct");
+
+score+=10;
+
+coins+=3;
+
+document.getElementById("feedback")
+.innerText=
+"✅ ممتاز! إجابة صحيحة.";
+
+document.getElementById("conversation")
+.innerHTML+=`
+
+<div class="me">
+
+<b>👩‍⚕️ د. مشيرة:</b>
+
+<br>
+
+أختار:
+<b>${q.options[index]}</b>
+
+</div>
+
+<div class="doc">
+
+<b>${levels[currentLevel].face}
+${levels[currentLevel].doctor}:</b>
+
+<br>
+
+إجابة ممتازة يا د. مشيرة.
+واضح إن مستواكِ بيتطور.
+
+</div>
+
+`;
+
+}else{
+
+button.classList.add("wrong");
+
+buttons[q.correct]
+.classList.add("correct");
+
+hearts--;
+
+document.getElementById("feedback")
+.innerText=
+"❌ إجابة غير صحيحة — راجعي المعلومة الطبية.";
+
+document.getElementById("conversation")
+.innerHTML+=`
+
+<div class="me">
+
+<b>👩‍⚕️ د. مشيرة:</b>
+
+<br>
+
+أحتاج أراجع النقطة دي مرة أخرى.
+
+</div>
+
+<div class="doc">
+
+<b>${levels[currentLevel].face}
+${levels[currentLevel].doctor}:</b>
+
+<br>
+
+الإجابة الصحيحة هي:
+<b>${q.options[q.correct]}</b>
+
+<br>
+
+ولا تقلقي، الخطأ هنا جزء من التعلم.
+
+</div>
+
+`;
+
+}
+
+updateStats();
+
+if(hearts<=0){
+
+setTimeout(gameOver,700);
+
+}else{
+
+document.getElementById("nextButton")
+.classList.remove("hidden");
+
+}
+
+}
+
+
+/* =========================================================
+   التالي
+========================================================= */
+
+function nextQuestion(){
+
+currentQuestion++;
+
+if(currentQuestion>=15){
+
+finishLevel();
+
+}else{
+
+showQuestion();
+
+}
+
+}
+
+
+/* =========================================================
+   إنهاء المرحلة
+========================================================= */
+
+function finishLevel(){
+
+let earnedXP=
+score+50;
+
+let earnedCoins=
+30+score;
+
+xp+=earnedXP;
+
+coins+=earnedCoins;
+
+if(currentLevel<44){
+
+currentLevel++;
+
+}
+
+saveData();
+
+document.getElementById("finalScore")
+.innerText=score;
+
+document.getElementById("earnedXP")
+.innerText=earnedXP;
+
+document.getElementById("earnedCoins")
+.innerText=earnedCoins;
+
+document.getElementById("resultIcon")
+.innerText="🏆";
+
+document.getElementById("resultTitle")
+.innerText=
+"🎉 أحسنتِ يا د. مشيرة!";
+
+document.getElementById("resultText")
+.innerText=
+"أنهيتِ مرحلة "
++(currentLevel)
++" بنجاح.";
+
+document.getElementById("nextLevelButton")
+.classList.remove("hidden");
+
+if(currentLevel>=44){
+
+document.getElementById("resultIcon")
+.innerText="🎓";
+
+document.getElementById("resultTitle")
+.innerText=
+"🎓 أكملتِ رحلة الـ45 تخصصًا!";
+
+document.getElementById("resultText")
+.innerText=
+"أصبحتِ خبيرة في 45 مجالًا طبيًا داخل اللعبة.";
+
+document.getElementById("nextLevelButton")
+.classList.add("hidden");
+
+}
+
+showScreen("result");
+
+}
+
+
+/* =========================================================
+   خسارة المحاولة
+========================================================= */
+
+function gameOver(){
+
+document.getElementById("finalScore")
+.innerText=score;
+
+document.getElementById("earnedXP")
+.innerText=0;
+
+document.getElementById("earnedCoins")
+.innerText=0;
+
+document.getElementById("resultIcon")
+.innerText="💙";
+
+document.getElementById("resultTitle")
+.innerText=
+"انتهت المحاولة";
+
+document.getElementById("resultText")
+.innerText=
+"حاولي مرة أخرى وراجعي الأسئلة الطبية.";
+
+document.getElementById("nextLevelButton")
+.classList.add("hidden");
+
+showScreen("result");
+
+}
+
+
+/* =========================================================
+   المرحلة التالية
+========================================================= */
+
+function nextLevel(){
+
+startLevel();
+
+}
+
+
+/* =========================================================
+   الإحصائيات
+========================================================= */
+
+function updateStats(){
+
+document.getElementById("score")
+.innerText=score;
+
+document.getElementById("coins")
+.innerText=coins;
+
+document.getElementById("hearts")
+.innerText=
+"❤️".repeat(hearts)+
+"🖤".repeat(3-hearts);
+
+}
+
+
+/* =========================================================
+   الحفظ
+========================================================= */
+
+function saveData(){
+
+localStorage.setItem(
+"moshiraLevel",
+currentLevel
+);
+
+localStorage.setItem(
+"moshiraXP",
+xp
+);
+
+localStorage.setItem(
+"moshiraCoins",
+coins
+);
+
+}
+
+
+/* =========================================================
+   المتجر
+========================================================= */
+
+const shopItems={
+
+stethoscope:["🩺","سماعة طبية"],
+
+coat:["🥼","بالطو طبي"],
+
+gloves:["🧤","قفازات"],
+
+firstaid:["🩹","حقيبة إسعافات"],
+
+microscope:["🔬","مجهر"],
+
+badge:["⭐","شارة الطبيبة"]
+
+};
+
+
+function openShop(){
+
+document.getElementById("shopCoins")
+.innerText=coins;
+
+updateShop();
+
+showScreen("shop");
+
+}
+
+
+function updateShop(){
+
+Object.keys(shopItems).forEach(item=>{
+
+let box=
+document.getElementById(
+"owned-"+item
+);
+
+if(
+localStorage.getItem(
+"moshiraItem_"+item
+)==="yes"
+){
+
+box.innerHTML=
+"<b style='color:#15803d'>✅ تمتلكينه</b>";
+
+}else{
+
+box.innerHTML="";
+
+}
+
+});
+
+}
+
+
+function buyItem(name,price){
+
+if(
+localStorage.getItem(
+"moshiraItem_"+name
+)==="yes"
+){
+
+alert("هذا العنصر موجود بالفعل.");
+
+return;
+
+}
+
+if(coins<price){
+
+alert("ليس لديكِ عملات كافية 🪙");
+
+return;
+
+}
+
+coins-=price;
+
+localStorage.setItem(
+"moshiraItem_"+name,
+"yes"
+);
+
+saveData();
+
+updateShop();
+
+document.getElementById("shopCoins")
+.innerText=coins;
+
+alert("🎉 تم الشراء بنجاح!");
+
+}
+
+
+/* =========================================================
+   المقتنيات
+========================================================= */
+
+function openCollection(){
+
+let box=
+document.getElementById("collectionList");
+
+box.innerHTML="";
+
+let found=false;
+
+Object.keys(shopItems)
+.forEach(item=>{
+
+if(
+localStorage.getItem(
+"moshiraItem_"+item
+)==="yes"
+){
+
+found=true;
+
+let div=
+document.createElement("div");
+
+div.className="shopItem";
+
+div.innerHTML=`
+
+<div class="shopIcon">
+${shopItems[item][0]}
+</div>
+
+<b>${shopItems[item][1]}</b>
+
+<br>
+
+<span style="color:#15803d">
+✅ تمتلكينه
+</span>
+
+`;
+
+box.appendChild(div);
+
+}
+
+});
+
+if(!found){
+
+box.innerHTML=`
+
+<p class="sub">
+
+🎒 لا توجد مقتنيات حتى الآن.
+
+<br>
+
+اذهبي إلى المتجر وابدئي بالشراء.
+
+</p>
+
+`;
+
+}
+
+showScreen("collection");
+
+}
+
+
+/* =========================================================
+   لعبة جديدة
+========================================================= */
+
+function newGame(){
+
+let ok=
+confirm(
+"هل تريدين حذف تقدمك وبدء اللعبة من المرحلة الأولى؟"
+);
+
+if(!ok)return;
+
+currentLevel=0;
+
+xp=0;
+
+coins=0;
+
+saveData();
+
+Object.keys(shopItems)
+.forEach(item=>{
+
+localStorage.removeItem(
+"moshiraItem_"+item
+);
+
+});
+
+goHome();
+
+}
+
+
+/* =========================================================
+   التشغيل
+========================================================= */
+
+updateHome();
+
+</script>
+
+</body>
+</html>
